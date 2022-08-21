@@ -9,7 +9,7 @@ const initialValues = {
   passwordConfirm: "",
 };
 
-const onSubmit = (values) => console.log(values);
+const onSubmit = (values) => {};
 
 const validationSchema = yup.object({
   name: yup
@@ -47,6 +47,7 @@ const SignUpForm = () => {
     initialValues, //initial values of the form
     onSubmit, //function to run when the form is submitted
     validationSchema, //validation schema for the form
+    validateOnMount: true, //validate the forms when the component is mounted
   });
 
   return (
@@ -100,7 +101,7 @@ const SignUpForm = () => {
           <input
             {...formik.getFieldProps("password")}
             placeholder="enter your password"
-            type="text"
+            type="password"
             name="password"
           />
           {formik.errors.password && formik.touched.password && (
@@ -114,7 +115,7 @@ const SignUpForm = () => {
           <input
             {...formik.getFieldProps("passwordConfirm")}
             placeholder="enter your password again"
-            type="text"
+            type="password"
             name="passwordConfirm"
           />
           {formik.errors.passwordConfirm && formik.touched.passwordConfirm && (
@@ -123,6 +124,7 @@ const SignUpForm = () => {
         </div>
 
         <button
+          disabled={!formik.isValid} //disable the button if the form had errors
           type="submit"
           className="px-6 py-2 bg-indigo-500 text-white w-full rounded-lg"
         >
