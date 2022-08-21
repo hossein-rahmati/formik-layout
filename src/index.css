@@ -4,7 +4,11 @@
 
 @layer components {
   .formControl {
-    margin-bottom: 1rem;
+    @apply mb-4;
+  }
+
+  .error {
+    @apply text-red-500;
   }
 
   label {

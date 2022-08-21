@@ -1,29 +1,42 @@
-import { useState } from "react";
 import { useFormik } from "formik";
+import * as yup from "yup";
+
+const initialValues = { name: "", email: "", password: "" };
+
+const onSubmit = (values) => console.log(values);
+
+const validationSchema = yup.object({
+  name: yup.string().required("Name is required"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 
 const SignUpForm = () => {
   const formik = useFormik({
-    initialValues: { name: "", email: "", password: "" },
+    initialValues,
+    onSubmit,
+    validationSchema,
   });
-  console.log(formik.values);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("submited");
-  };
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={formik.handleSubmit}>
         <div className="formControl">
           <label>Name</label>
           <input
             onChange={formik.handleChange}
             placeholder="name..."
+            onBlur={formik.handleBlur}
             type="text"
             value={formik.values.name}
             name="name"
           />
+          {formik.errors.name && formik.touched.name && (
+            <div className="error">{formik.errors.name}</div>
+          )}
         </div>
 
         <div className="formControl">
@@ -31,10 +44,14 @@ const SignUpForm = () => {
           <input
             onChange={formik.handleChange}
             placeholder="example@ex.com"
+            onBlur={formik.handleBlur}
             type="t ext"
             value={formik.values.email}
             name="email"
           />
+          {formik.errors.email && formik.touched.email && (
+            <div className="error">{formik.errors.email}</div>
+          )}
         </div>
 
         <div className="formControl">
@@ -42,13 +59,20 @@ const SignUpForm = () => {
           <input
             onChange={formik.handleChange}
             placeholder="********"
+            onBlur={formik.handleBlur}
             type="text"
             value={formik.values.password}
             name="password"
           />
+          {formik.errors.password && formik.touched.password && (
+            <div className="error">{formik.errors.password}</div>
+          )}
         </div>
 
-        <button className="px-6 py-2 bg-indigo-500 text-white w-full rounded-lg">
+        <button
+          type="submit"
+          className="px-6 py-2 bg-indigo-500 text-white w-full rounded-lg"
+        >
           submit
         </button>
       </form>
