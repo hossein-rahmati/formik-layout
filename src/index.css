@@ -15,7 +15,9 @@
     @apply flex mb-1 font-extrabold;
   }
 
-  input {
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
     @apply w-96 py-2 px-4 border border-zinc-200 rounded-lg;
   }
 

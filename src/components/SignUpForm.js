@@ -5,6 +5,7 @@ const initialValues = {
   name: "",
   email: "",
   phone: "",
+  gender: "",
   password: "",
   passwordConfirm: "",
 };
@@ -27,6 +28,8 @@ const validationSchema = yup.object({
     .required("Phone is required")
     .matches(/^[0-9]{11}$/, "Invalid phone number") //set a limit to the length of the phone number
     .nullable(),
+
+  gender: yup.string().required("Gender is required"),
 
   password: yup
     .string()
@@ -121,6 +124,35 @@ const SignUpForm = () => {
           {formik.errors.passwordConfirm && formik.touched.passwordConfirm && (
             <div className="error">{formik.errors.passwordConfirm}</div>
           )}
+        </div>
+
+        {/* gender selection */}
+        <div className="flex mb-6">
+          <div className="flex items-center mr-4">
+            <input
+              onChange={formik.handleChange}
+              className="w-4 h-4 mr-1"
+              type="radio"
+              id="0"
+              name="gender"
+              value="0"
+              checked={formik.values.gender === "0"}
+            />
+            <label htmlFor="0">Male</label>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              onChange={formik.handleChange}
+              className="w-4 h-4 mr-1"
+              type="radio"
+              id="1"
+              name="gender"
+              value="1"
+              checked={formik.values.gender === "1"}
+            />
+            <label htmlFor="1">Female</label>
+          </div>
         </div>
 
         <button
