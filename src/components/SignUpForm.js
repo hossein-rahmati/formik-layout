@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 
 const initialValues = {
@@ -16,7 +18,7 @@ const validationSchema = yup.object({
   name: yup
     .string()
     .required("Name is required")
-    .min(6, "Name must be at least 6 characters"), // the length of the name must be at least 6 characters
+    .min(4, "Name must be at least 6 characters"), // the length of the name must be at least 4 characters
 
   email: yup
     .string()
@@ -46,12 +48,22 @@ const validationSchema = yup.object({
 });
 
 const SignUpForm = () => {
+  const [formValue, setFormValue] = useState(null);
+
   const formik = useFormik({
-    initialValues, //initial values of the form
+    initialValues: formValue || initialValues, //initial values of the form
     onSubmit, //function to run when the form is submitted
     validationSchema, //validation schema for the form
     validateOnMount: true, //validate the forms when the component is mounted
+    enableReinitialize: true, // load the last datas if it exists
   });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/user/1")
+      .then((res) => setFormValue(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div>
