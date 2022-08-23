@@ -1,7 +1,14 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import RadioInput from "./common/RadioInput";
+import Input from "./common/Input";
 import * as yup from "yup";
+
+const radioOptions = [
+  { label: "male", value: "0" },
+  { label: "female", value: "1" },
+];
 
 const initialValues = {
   name: "",
@@ -69,103 +76,49 @@ const SignUpForm = () => {
     <div>
       <form onSubmit={formik.handleSubmit}>
         {/* name section */}
-        <div className="formControl">
-          <label>Name</label>
-          <input
-            {...formik.getFieldProps("name")}
-            placeholder="your nickName"
-            type="text"
-            name="name"
-          />
-          {formik.errors.name && formik.touched.name && (
-            <div className="error">{formik.errors.name}</div>
-          )}
-        </div>
+        <Input
+          formik={formik}
+          name="name"
+          label="Name"
+          placeHolder="Your name"
+        />
 
         {/* email section */}
-        <div className="formControl">
-          <label>Email</label>
-          <input
-            {...formik.getFieldProps("email")}
-            placeholder="formik@ex.com"
-            type="text"
-            name="email"
-          />
-          {formik.errors.email && formik.touched.email && (
-            <div className="error">{formik.errors.email}</div>
-          )}
-        </div>
+        <Input
+          formik={formik}
+          name="email"
+          label="Email"
+          placeHolder="test@ex.com"
+        />
 
-        {/* number section */}
-        <div className="formControl">
-          <label>Phone Number</label>
-          <input
-            {...formik.getFieldProps("phone")}
-            placeholder="(123) 456-7890"
-            type="text"
-            name="phone"
-          />
-          {formik.errors.phone && formik.touched.phone && (
-            <div className="error">{formik.errors.phone}</div>
-          )}
-        </div>
+        {/*phone number section */}
+        <Input
+          formik={formik}
+          name="phone"
+          label="Phone Number"
+          placeHolder="09xxxxxxxxx"
+        />
 
         {/* password section */}
-        <div className="formControl">
-          <label>Password</label>
-          <input
-            {...formik.getFieldProps("password")}
-            placeholder="enter your password"
-            type="password"
-            name="password"
-          />
-          {formik.errors.password && formik.touched.password && (
-            <div className="error">{formik.errors.password}</div>
-          )}
-        </div>
+        <Input
+          formik={formik}
+          name="password"
+          label="Password"
+          type="password"
+          placeHolder="*********"
+        />
 
         {/* password confirmation section */}
-        <div className="formControl">
-          <label>Password confirmation</label>
-          <input
-            {...formik.getFieldProps("passwordConfirm")}
-            placeholder="enter your password again"
-            type="password"
-            name="passwordConfirm"
-          />
-          {formik.errors.passwordConfirm && formik.touched.passwordConfirm && (
-            <div className="error">{formik.errors.passwordConfirm}</div>
-          )}
-        </div>
+        <Input
+          formik={formik}
+          name="passwordConfirm"
+          label="Password Confirmation"
+          type="password"
+          placeHolder="enter password again"
+        />
 
         {/* gender selection */}
-        <div className="flex mb-6">
-          <div className="flex items-center mr-4">
-            <input
-              onChange={formik.handleChange}
-              className="w-4 h-4 mr-1"
-              type="radio"
-              id="0"
-              name="gender"
-              value="0"
-              checked={formik.values.gender === "0"}
-            />
-            <label htmlFor="0">Male</label>
-          </div>
-
-          <div className="flex items-center">
-            <input
-              onChange={formik.handleChange}
-              className="w-4 h-4 mr-1"
-              type="radio"
-              id="1"
-              name="gender"
-              value="1"
-              checked={formik.values.gender === "1"}
-            />
-            <label htmlFor="1">Female</label>
-          </div>
-        </div>
+        <RadioInput formik={formik} radioOptions={radioOptions} />
 
         <button
           disabled={!formik.isValid} //disable the button if the form had errors
