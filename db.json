@@ -6,6 +6,7 @@
       "email": "test@gmail.com",
       "phone": "09121234567",
       "gender": "0",
+      "nationality": "USA",
       "password": "12fjJ2222#",
       "passwordConfirm": "12fjJ2222#"
     }

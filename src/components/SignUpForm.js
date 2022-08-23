@@ -1,13 +1,21 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import * as yup from "yup";
 import RadioInput from "./common/RadioInput";
 import Input from "./common/Input";
-import * as yup from "yup";
+import SelectInput from "./common/SelectInput";
 
 const radioOptions = [
   { label: "male", value: "0" },
   { label: "female", value: "1" },
+];
+
+const selectOption = [
+  { label: "select nationality", value: "" },
+  { label: "Iran", value: "IR" },
+  { label: "Germany", value: "GER" },
+  { label: "U.S.A", value: "USA" },
 ];
 
 const initialValues = {
@@ -15,6 +23,7 @@ const initialValues = {
   email: "",
   phone: "",
   gender: "",
+  nationality: "",
   password: "",
   passwordConfirm: "",
 };
@@ -39,6 +48,8 @@ const validationSchema = yup.object({
     .nullable(),
 
   gender: yup.string().required("Gender is required"),
+
+  nationality: yup.string().required("Select your nationality !"),
 
   password: yup
     .string()
@@ -120,6 +131,13 @@ const SignUpForm = () => {
         {/* gender selection */}
         <RadioInput formik={formik} radioOptions={radioOptions} />
 
+        {/* Select nationality */}
+        <SelectInput
+          selectOptions={selectOption}
+          name="nationality"
+          formik={formik}
+        />
+
         <button
           disabled={!formik.isValid} //disable the button if the form had errors
           type="submit"
@@ -131,5 +149,4 @@ const SignUpForm = () => {
     </div>
   );
 };
-
 export default SignUpForm;

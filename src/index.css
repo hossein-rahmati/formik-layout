@@ -17,7 +17,8 @@
 
   input[type="text"],
   input[type="password"],
-  input[type="email"] {
+  input[type="email"],
+  select {
     @apply w-96 py-2 px-4 border border-zinc-200 rounded-lg;
   }
 
