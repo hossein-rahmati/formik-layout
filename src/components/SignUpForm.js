@@ -5,6 +5,12 @@ import * as yup from "yup";
 import RadioInput from "./common/RadioInput";
 import Input from "./common/Input";
 import SelectInput from "./common/SelectInput";
+import CheckBoxInput from "./common/CheckBoxInput";
+
+const checkBoxOptions = [
+  { label: "React.js", value: "react" },
+  { label: "Vue.js", value: "vue" },
+];
 
 const radioOptions = [
   { label: "male", value: "0" },
@@ -22,10 +28,12 @@ const initialValues = {
   name: "",
   email: "",
   phone: "",
-  gender: "",
-  nationality: "",
   password: "",
   passwordConfirm: "",
+  gender: "",
+  nationality: "",
+  intresets: [],
+  terms: false,
 };
 
 const onSubmit = (values) => {};
@@ -50,6 +58,13 @@ const validationSchema = yup.object({
   gender: yup.string().required("Gender is required"),
 
   nationality: yup.string().required("Select your nationality !"),
+
+  intresets: yup.array().min(1).required("select one expertise at least"),
+
+  terms: yup
+    .boolean()
+    .required("The terms and conditions must be accepted")
+    .oneOf([true]),
 
   password: yup
     .string()
@@ -129,7 +144,7 @@ const SignUpForm = () => {
         />
 
         {/* gender selection */}
-        <RadioInput formik={formik} radioOptions={radioOptions} />
+        <RadioInput formik={formik} radioOptions={radioOptions} name="gender" />
 
         {/* Select nationality */}
         <SelectInput
@@ -137,6 +152,31 @@ const SignUpForm = () => {
           name="nationality"
           formik={formik}
         />
+
+        {/* intresets selection */}
+        <CheckBoxInput
+          formik={formik}
+          checkBoxOptions={checkBoxOptions}
+          name="intresets"
+        />
+
+        {/* agreement of terms */}
+        <div className="flex items-center gap-x-1 mb-4">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            value={true}
+            onChange={formik.handleChange}
+            checked={formik.values.terms}
+            className="w-4 h-4 mr-1"
+          />
+          <label htmlFor="terms">Terms and conditions</label>
+
+          {formik.errors.terms && formik.touched.terms && (
+            <div className="error">{formik.errors.terms}</div>
+          )}
+        </div>
 
         <button
           disabled={!formik.isValid} //disable the button if the form had errors

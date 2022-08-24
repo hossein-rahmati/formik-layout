@@ -1,16 +1,16 @@
-const RadioInput = ({ formik, radioOptions, name }) => {
+const CheckBoxInput = ({ formik, checkBoxOptions, name }) => {
   return (
     <div className="flex mb-6">
-      {radioOptions.map((item) => {
+      {checkBoxOptions.map((item) => {
         return (
           <div className="flex items-center mr-4" key={item.value}>
             <input
-              type="radio"
+              type="checkbox"
               id={item.value}
               name={name}
               value={item.value}
               onChange={formik.handleChange}
-              checked={formik.values[name] === item.value}
+              checked={formik.values[name].includes(item.value)}
               className="w-4 h-4 mr-1"
             />
             <label htmlFor={item.value}>{item.label}</label>
@@ -25,4 +25,4 @@ const RadioInput = ({ formik, radioOptions, name }) => {
   );
 };
 
-export default RadioInput;
+export default CheckBoxInput;
