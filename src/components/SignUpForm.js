@@ -36,7 +36,12 @@ const initialValues = {
   terms: false,
 };
 
-const onSubmit = (values) => {};
+const onSubmit = (values) => {
+  axios
+    .post("http://localhost:3001/user", values)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
 
 const validationSchema = yup.object({
   name: yup

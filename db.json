@@ -1,16 +1,3 @@
 {
-  "user": [
-    {
-      "id": "1",
-      "name": "test",
-      "email": "test@gmail.com",
-      "phone": "09121234567",
-      "gender": "0",
-      "nationality": "USA",
-      "intresets": ["react"],
-      "terms": false,
-      "password": "12fjJ2222#",
-      "passwordConfirm": "12fjJ2222#"
-    }
-  ]
+  "user": []
 }
